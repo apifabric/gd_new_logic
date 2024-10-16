@@ -1,0 +1,86 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+
+Table Addres {
+    id INTEGER [primary key]
+    customer_id INTEGER 
+    address_line1 VARCHAR 
+    city VARCHAR 
+    postal_code VARCHAR 
+    }
+
+Table Customer {
+    id INTEGER [primary key]
+    name VARCHAR 
+    balance FLOAT 
+    credit_limit FLOAT 
+    }
+
+Table Category {
+    id INTEGER [primary key]
+    name VARCHAR 
+    }
+
+Table Inventory {
+    id INTEGER [primary key]
+    product_id INTEGER 
+    quantity_in_stock INTEGER 
+    }
+
+Table Product {
+    id INTEGER [primary key]
+    name VARCHAR 
+    unit_price FLOAT 
+    }
+
+Table Item {
+    id INTEGER [primary key]
+    order_id INTEGER 
+    product_id INTEGER 
+    quantity INTEGER 
+    unit_price FLOAT 
+    amount FLOAT 
+    }
+
+Table Order {
+    id INTEGER [primary key]
+    customer_id INTEGER 
+    date_placed DATETIME 
+    date_shipped DATETIME 
+    amount_total FLOAT 
+    notes VARCHAR 
+    }
+
+Table OrderStatu {
+    id INTEGER [primary key]
+    status_name VARCHAR 
+    }
+
+Table PaymentMethod {
+    id INTEGER [primary key]
+    method_type VARCHAR 
+    }
+
+Table Promotion {
+    id INTEGER [primary key]
+    description VARCHAR 
+    }
+
+Table ShippingMethod {
+    id INTEGER [primary key]
+    method_name VARCHAR 
+    }
+
+Table Supplier {
+    id INTEGER [primary key]
+    name VARCHAR 
+    }
+
+
+
+// Relationships
+    Ref: Addres.(customer_id) < Customer.(id)
+    Ref: Inventory.(product_id) < Product.(id)
+    Ref: Item.(order_id) < Order.(id)
+    Ref: Item.(product_id) < Product.(id)
+    Ref: Order.(customer_id) < Customer.(id)

@@ -1,0 +1,272 @@
+about:
+  date: October 16, 2024 16:06:37
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 5
+  number_tables: 12
+info_toggle_checked: true
+resources:
+  Addres:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+      required: true
+    - name: address_line1
+      required: true
+    - name: city
+      required: true
+    - name: postal_code
+      required: true
+    description: Represents address details for customers for deliveries.
+    info_list: Represents address details for customers for deliveries.
+    tab_groups:
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    type: Addres
+    user_key: id
+  Category:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: id
+    description: Defines product categories.
+    info_list: Defines product categories.
+    type: Category
+    user_key: name
+  Customer:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: balance
+      required: true
+    - name: credit_limit
+      required: true
+    - name: id
+    description: Represents a customer with a tracking balance for their orders.
+    info_list: Represents a customer with a tracking balance for their orders.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - customer_id
+      name: AddresList
+      resource: Addres
+    - direction: tomany
+      fks:
+      - customer_id
+      name: OrderList
+      resource: Order
+    type: Customer
+    user_key: name
+  Inventory:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: product_id
+      required: true
+    - name: quantity_in_stock
+      required: true
+    description: Maintains current stock levels of products.
+    info_list: Maintains current stock levels of products.
+    tab_groups:
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Inventory
+    user_key: id
+  Item:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: order_id
+      required: true
+    - name: product_id
+      required: true
+    - name: quantity
+      required: true
+    - name: unit_price
+      required: true
+    - name: amount
+      required: true
+    description: Represents an item in an order, linking to both the product being
+      ordered and the order itself.
+    info_list: Represents an item in an order, linking to both the product being ordered
+      and the order itself.
+    tab_groups:
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Item
+    user_key: id
+  Order:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+      required: true
+    - name: amount_total
+      required: true
+    - name: notes
+    - name: date_placed
+    - name: date_shipped
+    description: Represents an order placed by a customer, includes a field for notes
+      and tracking total amount.
+    info_list: Represents an order placed by a customer, includes a field for notes
+      and tracking total amount.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - order_id
+      name: ItemList
+      resource: Item
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    type: Order
+    user_key: id
+  OrderStatu:
+    attributes:
+    - label: ' status_name*'
+      name: status_name
+      required: true
+      search: true
+      sort: true
+    - name: id
+    description: Tracks the status of orders in the system.
+    info_list: Tracks the status of orders in the system.
+    type: OrderStatu
+    user_key: status_name
+  PaymentMethod:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: method_type
+      required: true
+    description: Stores payment methods available to customers.
+    info_list: Stores payment methods available to customers.
+    type: PaymentMethod
+    user_key: id
+  Product:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: unit_price
+      required: true
+    - name: id
+    description: Represents a product that can be ordered, with a set unit price.
+    info_list: Represents a product that can be ordered, with a set unit price.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - product_id
+      name: InventoryList
+      resource: Inventory
+    - direction: tomany
+      fks:
+      - product_id
+      name: ItemList
+      resource: Item
+    type: Product
+    user_key: name
+  Promotion:
+    attributes:
+    - label: ' description*'
+      name: description
+      required: true
+      search: true
+      sort: true
+    - name: id
+    description: Manages promotional offers on products.
+    info_list: Manages promotional offers on products.
+    type: Promotion
+    user_key: description
+  ShippingMethod:
+    attributes:
+    - label: ' method_name*'
+      name: method_name
+      required: true
+      search: true
+      sort: true
+    - name: id
+    description: Defines different shipping methods available for orders.
+    info_list: Defines different shipping methods available for orders.
+    type: ShippingMethod
+    user_key: method_name
+  Supplier:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: id
+    description: Represents suppliers of products.
+    info_list: Represents suppliers of products.
+    type: Supplier
+    user_key: name
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'
